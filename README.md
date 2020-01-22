@@ -11,3 +11,9 @@
 * Crear aplicaciones usando sockets
 * Aprender Y reforzar tu conocimiento de Node
 * Mucho más
+
+Todos lo royectos tiene su package.json, por eso tiene que ejecutar el siguiente codigo en la linea de comando del proyecto
+
+```
+npm install
+```
