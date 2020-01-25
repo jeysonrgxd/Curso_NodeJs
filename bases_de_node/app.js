@@ -9,8 +9,9 @@ const { archivoText, listarOperacion } = require("./multiplicar/multiplicar")
 //  console.log(proceso)
 
 // para ordenar el codigo mejor importamos la configuracion que creamos del yargs en config/yargs.js podemos hacerla de dos formas, la primera es por que estamos exportando con module.exports un objeto fijarse en config/yargs.js el 
-//seundo es por metodo destructuring
 // const  argv2  = require("./config/yargs").argv2;
+
+//segundo es por metodo destructuring
 const { argv2 } = require("./config/yargs");
 
 //  en el process hay argv que al correr nuestro proyecto osea node app.js argumento argumento

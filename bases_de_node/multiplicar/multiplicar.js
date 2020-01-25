@@ -1,4 +1,4 @@
-// requerimos la clase(libreria) fs "FileSystem" este ya se encuentra nativamente en node por lo que no devemos importar nada es mas no nesesitamos ese paquetaso de node module, como si lo nesesitaremos al trabajar con el framework express ya que este no pertenece a node nativamente
+// requerimos la clase(libreria) fs "FileSystem" este ya se encuentra nativamente en node por lo que no devemos importar nada es mas no nesesitamos ese paquetaso de node module, como si lo nesesitaremos al trabajar con el framework express o con yargs ya que este no pertenece a node nativamente
 const fs = require("fs");
 const colors = require("colors")
 

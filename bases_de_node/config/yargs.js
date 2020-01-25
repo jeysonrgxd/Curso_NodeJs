@@ -1,4 +1,4 @@
-// YARGS libreria que nos ayudara a controlar y manejar de manera adecuando nuestras varibales para aplicaciones de consola
+// YARGS libreria que nos ayudara a controlar y manejar de manera adecuada nuestras varibales para aplicaciones de consola
 const argv2 = require("yargs")
    .command("listar", "Imprime en consola la tabla de multiplicar", {
       // objeto para poder trabajar con los argumentos que le pasaremos al comando listar que especificamos (flags los --.....) pasado en las  lineas de comando
@@ -14,7 +14,7 @@ const argv2 = require("yargs")
       }
    })
    .command("crear", "Crea un archico de texto con la tabla especificada", {
-      // objeto para poder trabajar con los argumentos que le pasaremos al comando listar que especificamos (flags los --.....) pasado en las  lineas de comando
+      // objeto para poder trabajar con los argumentos que le pasaremos al comando crear que especificamos (flags los --.....) pasado en las  lineas de comando
       base: {
          demand: true,
          alias: 'b',
@@ -25,7 +25,7 @@ const argv2 = require("yargs")
          default: 10
       }
    })
-   .help()
+   .help() //nos ayudara apoder listar un conjunto de ayuda de parametros o comando a consultar
    .argv
 
 module.exports = {
