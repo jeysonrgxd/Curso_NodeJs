@@ -1,0 +1,7 @@
+para crear tags de decarga en git hub estos son los comandos que tienes que agregar al repositorio
+
+> git tag -a v1.0.0 -m "primera versión"
+> git tag
+> git push --tag
+
+ya despues tienes que modificar en github ala apariencia y todo 
