@@ -1,0 +1,23 @@
+{{> head}}
+
+   {{!-- usamos esto para poder traer un trozo de codigo que nos servira en difentes paginas y asi lograr codigo html reutilizable para distintas paginas  --}}
+   {{> navbar }}
+
+   <div class="jumbotron">
+      
+      {{!-- la variable capitalizar es la variable del helper de hbs el cual ejecutara una funcion y le pasamos el parametro como lo bemos a continuacion --}}
+      {{!-- <h1 class="display-4">Hello, {{capitalizar 'jeyson gino'}}</h1> --}}
+
+      {{!-- ahora esta forma es para pasarle ala funcion del helper de hbs la variable que declaramos en el objeto que le pasamos como parametro al funcion render  --}}
+      <h1 class="display-4">Hello, {{capitalizar name}}</h1>
+
+      <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+         featured content or information.</p>
+      <hr class="my-4">
+      <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+   </div>
+ 
+   {{> footer}}
+
+

@@ -4,4 +4,19 @@ para crear tags de decarga en git hub estos son los comandos que tienes que agre
 > git tag
 > git push --tag
 
-ya despues tienes que modificar en github ala apariencia y todo 
+ya despues tienes que modificar en github ala apariencia y todo
+
+- recordar que para poder poner un comando en la zona de script en el package.json especificamente en:
+
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "old" : "node app_old" 
+  },
+
+para ejecutar lo asemos de la siguiente manera en primer lugar el test se corre 
+
+"npm test"
+
+pero ahora para ejecutar otros scripts personalizado se devera corrrer de la siguiente manera:
+
+"npm run old"
