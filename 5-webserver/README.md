@@ -6,8 +6,13 @@
 - HTML, css, Javascript, Bootstrap
 - Despliege de pagina en Heroku
 
-recordar una vez descargado el proyecto hacer ejecutar el comando: 
+Recordar una vez descargado el proyecto hacer ejecutar el comando: 
 
 ```
 npm install
 ```
+
+Pagina desplegada en Heroku :
+
+[I'm an inline-style link](https://jeyson-page-node.herokuapp.com/)
+
