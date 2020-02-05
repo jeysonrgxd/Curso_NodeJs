@@ -15,13 +15,14 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 app.get('/',(req, res)=>{
-   res.send("<style>body{background-color:#313131;color:#f1f1f1}</style><h1>Bienvenido al server de Node con el puero 3000</h1>")
+   res.send("<style>body{background-color:#313131;color:#f1f1f1}</style><h1>Bienvenido al Api Rest con Node y desplegado en heroku</h1><br><p>Todavia se encuentra en desarrollo u.u.</p>")
 })
 
 app.get('/usuario',(req, res)=>{
    // res.send("hola mundo")
    res.json({"nombre":"jeyson"})
 })
+
 app.post('/usuario/:id',(req,res)=>{
    // res.json(req.body)
    
@@ -42,6 +43,19 @@ app.post('/usuario/:id',(req,res)=>{
       })
 
    }
+})
+
+app.put('/usuario/:id',(req, res)=>{
+   console.log(`se modificara el usuario ${req.params.id}`);
+   let body = req.body;
+   res.json({
+      persona:body
+   })
+})
+
+app.delete('/usuario/:id', (req, res)=>{
+   console.log(`Se eliminara el usuario ${req.params.id}`);
+   res.send(`Se elimino el usuario ${req.params.id}`)
 })
 
 app.listen(process.env.PORT, ()=>{
