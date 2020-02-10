@@ -11,8 +11,34 @@ app.get('/', (req, res) => {
 
 app.get('/usuario', (req, res) => {
    // res.send("hola mundo")
-   res.json({
-      "nombre": "jeyson"
+
+   let desde = Number(req.query.dsd) || 0
+   let limite = Number(req.query.lmt) ||0
+
+   //buscame atravez del esquema especificado todos los registros de la collection me devuelve un state, ala vez como parametro recive un objeto de condicion como el sql de BD relacional pero en este caso el el lengujae no SQL de mongo
+   let state=Usuario.find({}, "nombre email google estado") //este segundo parametro es para filtrar que campos quiero mostrar
+   state.skip(desde)
+   state.limit(limite)
+   // ejecutamos con exec y recivimos como siempre el erro y la respuesta
+   state.exec((err, usuario)=>{
+      if(err){
+         return res.status(400).json({ok:false,err})
+      }
+
+      // cuantos registros hay en la base de datos, tambien recive el objeto con filtros que quermos obtener
+      // esta funcion de nuestro esquema de mongo recive la condicion y la ejecuta de frente 
+      //esto quiere decir cuantos documentos hay en la colecion del esquema Usuario
+      Usuario.countDocuments({},(err, cant)=>{
+         res.json({
+            ok: true,
+            usuario,
+            cantidad: cant
+
+         })
+      })
+      // imprimos todos los datos de la collection en json con nuestro formato de siempre
+      
+      //res.send(usuario) //este nos traer un array de objetos en formato json
    })
 })
 
@@ -92,8 +118,45 @@ app.put('/usuario/:id', (req, res) => {
 })
 
 app.delete('/usuario/:id', (req, res) => {
-   console.log(`Se eliminara el usuario ${req.params.id}`);
-   res.send(`Se elimino el usuario ${req.params.id}`)
+   let id = req.params.id
+   
+   // con esta funcion removemos un usuario de la base de datos, el primer parametro es id del objeto de la ceollection de mongo que quermos borrar (un registro), y el segundo recive un callback como siempre el error y el usuario borrado
+   
+   // Usuario.findByIdAndRemove(id,(err, usuarioBorrado)=>{
+   //    if(err){
+   //       // no olvidar el return para que finalice y no ejecute lo siguiente
+   //       return res.status(400).json({
+   //          ok:false,
+   //          err
+   //       })
+   //    }
+   //    if (!usuarioBorrado){
+   //       // no olvidar el return para que finalice y no ejecute lo siguiente
+   //       return res.status(400).json({
+   //          ok: false,
+   //          err:{
+   //             message:"Usuario no encontrado"
+   //          }
+   //       })
+   //    }
+   //    res.json({
+   //       ok:true,
+   //       usuario:usuarioBorrado
+   //    })
+   // })
+
+   Usuario.findByIdAndUpdate(id, {estado:false},{new:true},(err,usuarioDisabled)=>{
+      if(err){
+         return res.status(400).json({
+            ok:false,
+            err
+         })
+      }
+      res.json({
+         ok:true,
+         usuario:usuarioDisabled
+      })
+   })
 })
 
 module.exports = app

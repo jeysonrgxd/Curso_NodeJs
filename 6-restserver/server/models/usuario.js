@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true); //esto es para especificar campos unique('tiene que ver con la creacion de indices tambien se puede poner defrente en la creacion de la conexion como una propiedad del objeto que recive')
 
-// plugin para mostrar los mensaje de validacion de campos unicos, ps este plugin nosa un error en json mas acomodado "userfriendly"
+// plugin para mostrar los mensaje de validacion de campos unicos, ps este plugin nosda un error en json mas acomodado "userfriendly" para poder trabjar en el front los errores a mostrar
 const uniqueValidator = require("mongoose-unique-validator");
 
 // especificamos roles validos y le pasamos un mensaje de error si no se cumple el rol pasado con los que estan especificado el value

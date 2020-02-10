@@ -11,17 +11,17 @@ const bodyParser = require("body-parser")
 // middleware
 // app.use(express.json())
 
-// parse application/x-www-form-urlencoded
+// parse application/x-www-form-urlencoded //para poder recivir los datos de un formulario de typo post
 app.use(bodyParser.urlencoded({extended:false}))
 
-// parse application/json
+// parse application/json , para poder trabajar con formatos json
 app.use(bodyParser.json())
 
 // este es para darle el valor app que creamos con todas las rutas al app del server (estamos dandole a la varibale app todas rutas que creamos en routes/usuario)
 app.use(require('./routes/usuario')) 
 
 // nos conectamos ala base de datos de mongo ala base de datos cafe y si no hay la creara
-mongo.connect("mongodb://localhost:27017/cafe", {
+mongo.connect(process.env.URLDB, {
    // estos son atributos del objeto por default nesesarios 
    useNewUrlParser: true,
    useUnifiedTopology: true,
