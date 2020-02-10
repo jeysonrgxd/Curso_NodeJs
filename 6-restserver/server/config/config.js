@@ -16,7 +16,7 @@ if(process.env.NODE_ENV === "dev"){
    urlDB = "mongodb://localhost:27017/cafe" 
 } else{
    // url de conexion de Mongo Atlas donde se encuentra alojado nuestra base de datos
-   urlDB = "mongodb+srv://jeysonrg:teamoinesx100pre@cluster0-s6ibv.mongodb.net/cafe"
+   urlDB = process.env.MONGO_URI
 }
 
 process.env.URLDB = urlDB;
