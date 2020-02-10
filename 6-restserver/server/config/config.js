@@ -16,6 +16,7 @@ if(process.env.NODE_ENV === "dev"){
    urlDB = "mongodb://localhost:27017/cafe" 
 } else{
    // url de conexion de Mongo Atlas donde se encuentra alojado nuestra base de datos
+   // aca utilizamos la variable que fue creada en la terminal de heroku para poder ocultar nuestra url de conexion 
    urlDB = process.env.MONGO_URI
 }
 
