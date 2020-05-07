@@ -41,7 +41,10 @@ let met_nombre = () => {
 
 let saludoasync = async () => {
    let saludito = await met_nombre()
-   console.log(saludito)
+   // console.log(saludito)
+   return saludito
 }
-saludoasync()
+
+// toda funcion async retorana una promesa
+saludoasync().then(resp=> console.log(resp))
 
