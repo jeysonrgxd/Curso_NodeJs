@@ -1,4 +1,5 @@
 // aca estara la configuracion de yargs
+// estamos definiendo los procesos de las tareas que consultaremos mediante la consola
 const argv = require("yargs")
                .command("crear","Crear un elemento por hacer",{
                   descripcion:{

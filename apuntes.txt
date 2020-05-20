@@ -1,4 +1,4 @@
-para crear tags de decarga en git hub estos son los comandos que tienes que agregar al repositorio
+para crear tags de descarga en git hub estos son los comandos que tienes que agregar al repositorio
 
 > git tag -a v1.0.0 -m "primera versión"
 > git tag

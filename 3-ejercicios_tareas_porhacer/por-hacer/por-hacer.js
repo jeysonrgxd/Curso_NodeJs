@@ -1,6 +1,7 @@
 // aca estara toda la logica le tareas por hacer
 const fs = require("fs");
 
+// Array de objetos de tipo tareas
 let listadoProHacer = [];
 
 const gardarDB = ()=>{
@@ -54,13 +55,15 @@ const getListado = ()=>{
 
 const updateTarea = (descripcion, estado = true)=>{
    cargarDB();
+   // nos devulve el indice(la posicion que ocupa en el array) de la tarea buscada por su descripcion
    let index_tarea = listadoProHacer.findIndex(tarea => tarea.descripcion === descripcion);
+   
    if (index_tarea >= 0) {
-
       listadoProHacer[index_tarea].completado = convertBool(estado);
       gardarDB()
       return true;
    }
+
    else{
       return false;
    }
@@ -71,6 +74,8 @@ const deleteTarea = (descripcion) => {
    let index_tarea = listadoProHacer.findIndex(tarea => tarea.descripcion === descripcion);
    if (index_tarea >= 0){
       listadoProHacer.splice(index_tarea,1);
+      // tambien podemos usar el pop
+      //listadoProHacer.pop(index_tarea)
       gardarDB()
       return true;
    }
