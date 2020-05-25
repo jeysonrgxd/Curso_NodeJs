@@ -1,5 +1,5 @@
 // importamos la libreria axios que descargamos con npm
-//  recordar que axios maneja las peticiones a puras promesas diferente de la libreia request
+//  recordar que axios maneja las peticiones a puras promesas diferente de la libreia request que las maneja con callbacks
 const axios = require('axios');
 
 const getLugarLatLng = async (dir) => {
@@ -18,16 +18,17 @@ const getLugarLatLng = async (dir) => {
    const resp = await intanceAxios.get()
    // validamos si esta vacio el arreglo
    if(resp.data.Results.length === 0){
-      // generamos un erro
+      // generamos un error
       throw new Error(`No hay resultado para ${dir}`)
    }
-   // esto nos devuelve el primero objeto del array de resultado todo esto es bueno acerlo 7////ala par con la respuesta que nos envia atraves de postman para ir viendo que podemos 
+   // esto nos devuelve el primero objeto del array de resultado todo esto es bueno acerlo ////ala par con la respuesta que nos envia atraves de postman para ir viendo que podemos 
    //utilizar y crear una buena aplicacion
    const data = resp.data.Results[0];
    const direccion= data.name
    const lat=data.lat
    const lng=data.lon
 
+   // usamos ecmascript 6 para pasar los atributos al objeto que retorna la funcion
    return {
       direccion,
       lat,

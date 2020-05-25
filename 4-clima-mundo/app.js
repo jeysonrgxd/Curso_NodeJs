@@ -40,7 +40,7 @@ const getInfo = async ( direccion ) => {
       //   let name = resp.direccion
       let resp_temp = await clima.getTemperatura(resp.lat,resp.lng)
       let temperatura = resp_temp.temp
-      return `El clima de ${resp.direccion} es de ${temperatura}°`
+      return `El clima de ${resp.direccion} es de ${temperatura}Â°`
 
    } catch (error) {
       return `No se pudo determinar el clima de ${direccion}`
@@ -50,6 +50,7 @@ const getInfo = async ( direccion ) => {
 getInfo(encodeDIR)
 .then(console.log)
 .catch(console.log)
+
 
 
 
