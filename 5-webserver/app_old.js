@@ -14,7 +14,7 @@ let num = 1;
 // cuando creamos un servidor mi servidor va ser capaz de reicivir informacion de los clientes y darles una respuesta algo, peticion : recivir informacion, respuesta: darles una respuesta o algo
 http.createServer(function(peticion, respuesta){
    num++;
-   // esto imprime en la terminar donde corrimos el comando para le vantar el servidor mas no imprime en la consola del navegador
+   // esto imprime en la terminar donde corrimos el comando para levantar el servidor mas no imprime en la consola del navegador
    console.log(`refrescastes ${num}`);
    
    // antes de mostrarle la respuesta le especifiquemos el tipo de contenido
@@ -52,6 +52,6 @@ http.createServer(function(peticion, respuesta){
 
 })
 //esta funcion lo que hace es establecer el puerto en donde sera escuchado el servidor creado y ademas le pasamos un callback luego de que especifiquemos el puerto donde sera escuchado nuestro servidor ejecutame el callback
-.listen(3000, () => {
+.listen(port, () => {
    console.log("Server run in",`http://${hostname}:${port}`.green)
 }) 

@@ -9,3 +9,6 @@ app.use(express.static(__dirname + '/public'))
 app.listen(3000, () => {
    console.log("server listen in port 3000")
 })
+ 
+// OJO RECORDAR QUE UNA VEZ INGRESES AL NAVEGADOR ALA DIRECCION  http://localhost:3000/
+// COMO NO TENEMOS index.html en public/ ya que es lo primiero o lo por defecto que encuentra y lo pinta en el navegador, nosotro tenemos que poner http://localhost:3000/index-old.html
