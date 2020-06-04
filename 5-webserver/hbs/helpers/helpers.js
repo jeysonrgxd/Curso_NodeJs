@@ -1,6 +1,6 @@
 const hbs = require("hbs")
 
-// helpers : es una funcion que se dispara cuando template lo rrequiere "por eso solo se usa el el template de HBS"
+// helpers : es una funcion que se dispara cuando template lo rrequiere "por eso solo se usa en el el template de HBS"
 hbs.registerHelper("getAnio", () => new Date().getFullYear())
 
 // creamos otro helper esta vez con una funcion que obtiene un parametro

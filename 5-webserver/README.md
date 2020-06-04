@@ -6,6 +6,13 @@
 - HTML, css, Javascript, Bootstrap
 - Despliege de pagina en Heroku
 
+instalar HBS (handelbars)
+
+```
+npm install hbs --save
+
+```
+
 Recordar una vez descargado el proyecto hacer ejecutar el comando: 
 
 ```

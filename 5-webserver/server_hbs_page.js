@@ -8,8 +8,8 @@ const port = process.env.PORT || 3000
 require("./hbs/helpers/helpers");
 
 
-// asi utilizemos un template engine para nuestras paginas es nesesario que este el app.use
-// ya que nos tare los archivos del public y es lo que nuestra plnatilla de hbs utiliza como stylos js bootstrap
+// si utilizemos un template engine para nuestras paginas es nesesario que este el app.use
+// ya que nos traera los archivos del public y es lo que nuestra plantilla de hbs utiliza como stylos js bootstrap
 app.use(express.static(__dirname + '/public'))
 
 
