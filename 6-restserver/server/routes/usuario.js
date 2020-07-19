@@ -13,10 +13,10 @@ app.get('/usuario', (req, res) => {
    // res.send("hola mundo")
 
    let desde = Number(req.query.dsd) || 0
-   let limite = Number(req.query.lmt) ||0
+   let limite = Number(req.query.lmt) ||5
 
    //buscame atravez del esquema especificado todos los registros de la collection me devuelve un state, ala vez como parametro recive un objeto de condicion como el sql de BD relacional pero en este caso el el lengujae no SQL de mongo
-   let state=Usuario.find({}, "nombre email google estado") //este segundo parametro es para filtrar que campos quiero mostrar
+   let state = Usuario.find({estado:true}, "nombre email google estado") //este segundo parametro es para filtrar que campos quiero mostrar
    state.skip(desde)
    state.limit(limite)
    // ejecutamos con exec y recivimos como siempre el erro y la respuesta
@@ -28,7 +28,7 @@ app.get('/usuario', (req, res) => {
       // cuantos registros hay en la base de datos, tambien recive el objeto con filtros que quermos obtener
       // esta funcion de nuestro esquema de mongo recive la condicion y la ejecuta de frente 
       //esto quiere decir cuantos documentos hay en la colecion del esquema Usuario
-      Usuario.countDocuments({},(err, cant)=>{
+      Usuario.countDocuments({estado: true}, (err, cant) => {
          res.json({
             ok: true,
             usuario,
@@ -100,10 +100,11 @@ app.put('/usuario/:id', (req, res) => {
    // para eso utilizamo la libreria underscore que nos ayudara afiltrar el objeto que nos proporciona el cliente 
    //para que despues lo actualizemos en mongo, underscore ayudara a crear un objeto del objeto que mande el cliente lo filtraremos con solo lo que quermos actualizar
    let body = _.pick(req.body,['nombre','email','role','estado'])
-   console.log(body);
    let id_user =req.params.id
-
    // esta funcion busca en la base de datos el id obtiene el documento le pasamos el body para update de datos, siguiente le pasamos un objeto de configuracion el cual hacemos verdadero el new para que nos devuelva el objeto actualizado o los datos finales y despues el callback de siempre
+
+   // tambien puede ser de esta forma:
+   // Usuario.findByIdAndUpdate(id_user, {nombre:req.body.nombre ......}, {new: true }, (err, usuarioDB) => {
    Usuario.findByIdAndUpdate(id_user, body, {new: true}, (err, usuarioDB) => {
       if(err){
          return res.status(400).json({
