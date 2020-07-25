@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 // este es para darle el valor app que creamos con todas las rutas al app del server (estamos dandole a la varibale app todas rutas que creamos en routes/usuario)
-app.use(require('./routes/usuario')) 
+app.use(require('./routes/index')) 
 
 // nos conectamos ala base de datos de mongo ala base de datos cafe y si no hay la creara
 mongo.connect(process.env.URLDB, {
