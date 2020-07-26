@@ -4,13 +4,23 @@ const Usuario = require("../models/usuario")
 const bcrypt = require('bcrypt')//libreria para encripta 
 const _ = require('underscore') //libreria para trabajar con validacion de objetos y muchas otras cosas
 
+// traemos una funcion que le pasaremos como middleware a una peticion
+const { verificaToken,verificaAdmin_Role } = require("../middlewares/autenticacion");
+
 app.get('/', (req, res) => {
 
    res.send("<style>body{background-color:#313131;color:#f1f1f1}</style><h1>Bienvenido al Api Rest con Node y desplegado en heroku</h1><br><p>Estas en desarrollo</p>")
 })
 
-app.get('/usuario', (req, res) => {
+app.get('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
    // res.send("hola mundo")
+
+   // probamos el parametro que creamos si se valido el token
+   // return res.json({
+   //    ok:true,
+   //    nombre:req.usuario.nombre,
+   //    email:req.usuario.email
+   // })
 
    let desde = Number(req.query.dsd) || 0
    let limite = Number(req.query.lmt) ||5
@@ -42,7 +52,7 @@ app.get('/usuario', (req, res) => {
    })
 })
 
-app.post('/usuario',(req,res)=>{
+app.post('/usuario', [verificaToken,verificaAdmin_Role], (req, res) => {
 
    // instaciamos un objeto de la clase Usuario que nos traimos de models/usuario, y le pasamos los datos que tendra y ala vez validara con lo que definimos en su schema en moduls/usuario.js
    // ojo :
@@ -72,7 +82,7 @@ app.post('/usuario',(req,res)=>{
    
 })
 
-app.post('/usuario/:id', (req, res) => {
+app.post('/usuario/:id',[verificaToken,verificaAdmin_Role], (req, res) => {
    // res.json(req.body)
 
    // para obtener los datos con formato application/x-www-form-urlencoded
@@ -93,7 +103,7 @@ app.post('/usuario/:id', (req, res) => {
    }
 })
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
    // console.log(`se modificara el usuario ${req.params.id}`);
 
    // para validar solamente lo que debmos actualizar en este caso no tenemos que modificar la contraseña ni google
@@ -118,7 +128,7 @@ app.put('/usuario/:id', (req, res) => {
 
 })
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
    let id = req.params.id
    
    // con esta funcion removemos un usuario de la base de datos, el primer parametro es id del objeto de la ceollection de mongo que quermos borrar (un registro), y el segundo recive un callback como siempre el error y el usuario borrado
