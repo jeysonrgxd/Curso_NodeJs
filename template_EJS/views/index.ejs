@@ -1,0 +1,7 @@
+<!-- para incluir archivos ejs, le podemos pasar parametros tambien -->
+<%- include("templates/header",{tituloweb: 'Pagina de inicio'}) %>
+
+   <h2> <%= titulo %> </h2>
+   <button onclick="saludo()">Mensaje</button>
+
+<%- include("templates/footer") %>
