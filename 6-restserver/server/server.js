@@ -4,7 +4,8 @@ require('./config/config')
 const mongo = require("mongoose");
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const path = require("path");
 
 // middleware
 // app.use(express.json())
@@ -14,6 +15,14 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 // parse application/json , para poder trabajar con formatos json
 app.use(bodyParser.json())
+
+// esto es mas moderno ya que express ya viene incorporado con esto
+// app.use(express.urlencoded({extended:false}))
+// app.use(express.json())
+
+// especificamos los archivos staticos de nuestro servidor, para eso usamos el middleware
+app.use(express.static(path.resolve(__dirname,'../public')))
+
 
 // este es para darle el valor app que creamos con todas las rutas al app del server (estamos dandole a la varibale app todas rutas que creamos en routes/usuario)
 app.use(require('./routes/index')) 
