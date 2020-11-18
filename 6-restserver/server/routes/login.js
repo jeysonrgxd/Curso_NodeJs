@@ -6,7 +6,7 @@ const app = express()
 
 // utilizamos la libreria que instalamos con npm de google para node para la autentication. ref: https://developers.google.com/identity/sign-in/web/backend-auth
 const {OAuth2Client} = require('google-auth-library');
-const usuario = require("../models/usuario")
+
 // podemos crear un process.env y gaurdar esta clave
 const client = new OAuth2Client('101915388282-ldvuuic1tr2p4c0sje2fu2cif478vi1g.apps.googleusercontent.com');
 
@@ -18,13 +18,14 @@ async function verify(token) {
       // Or, if multiple clients access the backend:
       //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
    });
-   const payload = ticket.getPayload();
+   // asemos una destructuracion, para eso siempre hay que saber los que no va venoir
+   const {name,email,picture} = ticket.getPayload();
 
    // retornamos un objeto con las propiedades que queremos obtener
    return{
-      nombre:payload.name,
-      email:payload.email,
-      img:payload.picture,
+      nombre:name,
+      email:email,
+      img:picture,
       google:true
    }
 }
@@ -33,14 +34,16 @@ async function verify(token) {
 app.post("/login",(req,res)=>{
    const body = req.body
 
-   // solo quiero regresar un solo dato (solo una fila) por eso utulizamos esta funcion d encuentra modelo usuario
+   // solo quiero regresar un solo dato (solo una fila) por eso utulizamos esta funcion de para encuentrar un modelo usuario
    Usuario.findOne({email:body.email},(err,usuarioDB)=>{
+
       if(err){
          return res.status(500).json({
             ok:false,
             error:err
          })
       }
+
       if(!usuarioDB){
          return res.status(401).json({
             ok: false,
@@ -82,7 +85,7 @@ app.post("/login",(req,res)=>{
 app.post("/google",async (req,res)=>{
    let token = req.body.idtoken
 
-   // obtenermo los datos del usuario registrados de google, en este caso usamos await ya que la funcion verifi es asyncrona y ps toda funcion asyncrona devuelve una funcion, despues  le asemos un catch por si hay error y el servidor nos retornara
+   // obtenemos los datos del usuario registrados de google, en este caso usamos await ya que la funcion verifi es asyncrona y ps toda funcion asyncrona devuelve una funcion, despues  le asemos un catch por si hay error y el servidor nos retornara
    const googleUser = await verify(token).catch(e => {
       return res.status(403).json({
          ok:false,
@@ -91,7 +94,7 @@ app.post("/google",async (req,res)=>{
    })
    
    // si encaso no hayga error buscamos en la base de datos al usuario con el correo que obtenmos del googlesign
-   usuario.findOne({email:googleUser.email},(err,usuarioDB)=>{
+   Usuario.findOne({email:googleUser.email},(err,usuarioDB)=>{
       if(err){
          return res.status(500).json({
             ok:false,

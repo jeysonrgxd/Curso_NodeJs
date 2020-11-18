@@ -11,7 +11,7 @@ const path = require("path");
 // app.use(express.json())
 
 // parse application/x-www-form-urlencoded //para poder recivir los datos de un formulario de typo post
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json , para poder trabajar con formatos json
 app.use(bodyParser.json())
@@ -21,11 +21,11 @@ app.use(bodyParser.json())
 // app.use(express.json())
 
 // especificamos los archivos staticos de nuestro servidor, para eso usamos el middleware
-app.use(express.static(path.resolve(__dirname,'../public')))
+app.use(express.static(path.resolve(__dirname, '../public')))
 
 
 // este es para darle el valor app que creamos con todas las rutas al app del server (estamos dandole a la varibale app todas rutas que creamos en routes/usuario)
-app.use(require('./routes/index')) 
+app.use(require('./routes/index'))
 
 // nos conectamos ala base de datos de mongo ala base de datos cafe y si no hay la creara
 mongo.connect(process.env.URLDB, {
@@ -37,9 +37,16 @@ mongo.connect(process.env.URLDB, {
 }, (err, res) => { //callback despues de hacer la conxion
    if (err) throw err //si hay error termina el proceso y imprime el error
 
-   console.log("CONNECTADO A MONGO") // si no hay error imprime en consola conectado
+   if (process.env.NODE_ENV === 'dev') {
+
+      console.log("LOCALHOST CONNECTADO A MONGO") // si no hay error imprime en consola conectado
+   } 
+   else {
+      console.log("CONNECTADO A MONGO") // si no hay error imprime en consola conectado
+
+   }
 })
 
-app.listen(process.env.PORT, ()=>{
+app.listen(process.env.PORT, () => {
    console.log("server run in port 3000");
 })
