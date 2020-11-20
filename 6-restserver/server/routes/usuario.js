@@ -32,7 +32,7 @@ app.get('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
    // ejecutamos con exec y recivimos como siempre el erro y la respuesta
    state.exec((err, usuario)=>{
       if(err){
-         return res.status(400).json({ok:false,err})
+         return res.status(500).json({ok:false,err})
       }
 
       // cuantos registros hay en la base de datos, tambien recive el objeto con filtros que quermos obtener
