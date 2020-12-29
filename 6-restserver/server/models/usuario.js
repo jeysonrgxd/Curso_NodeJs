@@ -56,8 +56,8 @@ usuarioSchema.plugin(uniqueValidator, {message:'{PATH} debe de ser unico'})
 
 // este metodo toJson en un squema ciempre se llama cuando se intenta imprimir
 usuarioSchema.methods.toJSON = function () {
-   let user =  this
-   let objusuario = user.toObject() //de esta manera tenemos todo las propiedades y matodos
+   let user =  this //obtengo el contexto
+   let objusuario = user.toObject() //de esta manera tenemos todo las propiedades y metodos
    delete objusuario.password //eliminamos la contraeña para que no sea mostrada al cliente
    return objusuario;//retornamos
 }

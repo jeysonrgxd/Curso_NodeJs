@@ -57,7 +57,7 @@ app.get("/productos/:id", verificaToken, (req, res) => {
 })
 
 // =================
-// Busacar un prodcuto
+// Buscar un prodcuto
 // =================
 app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
    let termino = req.params.termino
