@@ -2,6 +2,8 @@ const express = require("express")
 const fileUpload = require("express-fileupload")
 const app = express()
 const path = require("path")
+const Usuario = require("../models/usuario")
+const fs = require("fs")
 // ipciones por default
 app.use(fileUpload())
 
@@ -60,13 +62,47 @@ app.post("/upload/:tipo/:id", (req, res) => {
       if (err) {
 
          return res.status(500).json({
-            ok: true,
+            ok: true, 
             err
          })
       }
 
-      return res.json({ ok: true, message: "Archivo Guardado" })
+      // return res.json({ ok: true, message: "Archivo Guardado" })
+      imagenUsuario(id, res, nuevoNombreUnico)
+
    })
 })
+
+function imagenUsuario(id, res, nombreArchivo) {
+
+   Usuario.findById(id, (err, usuarioDB) => {
+      if (err) {
+         borrarArchivo(nombreArchivo,'usuarios')
+         res.status(500).json({ ok: false, err })
+      }
+      
+      if (!usuarioDB) {
+         borrarArchivo(nombreArchivo,'usuarios')
+         res.status(400).json({ ok: false, message: 'Usuario no existe' })
+      }
+
+      borrarArchivo(usuarioDB.img,'usuarios')
+
+      usuarioDB.img = nombreArchivo
+
+      usuarioDB.save((err, usuarioGuardado) => {
+         res.json({ ok: true, usuario: usuarioGuardado, img: nombreArchivo })
+      })
+   })
+}
+
+function borrarArchivo(nombreImagen,tipo){
+   // primero obtenemos la ruta de la imagen ya guardada
+   let pathImage = path.resolve(__dirname, `../../upload/${tipo}/${nombreImagen}`)
+
+   if (fs.existsSync(pathImage)){ //comprobamos si existe ese archivoa atravez de la ruta
+      fs.unlink(pathImage) //eliminamos el archivo
+   }
+}
 
 module.exports = app;
