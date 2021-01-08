@@ -3,11 +3,13 @@ const fileUpload = require("express-fileupload")
 const app = express()
 const path = require("path")
 const Usuario = require("../models/usuario")
+const Producto = require("../models/producto")
 const fs = require("fs")
+
 // ipciones por default
 app.use(fileUpload())
 
-app.post("/upload/:tipo/:id", (req, res) => {
+app.put("/upload/:tipo/:id", (req, res) => {
 
    let tipo = req.params.tipo
    let id = req.params.id
@@ -20,7 +22,7 @@ app.post("/upload/:tipo/:id", (req, res) => {
       })
    }
 
-   let tiposPermitidos = ['productos', 'categorias'];
+   let tiposPermitidos = ['productos', 'categorias', 'usuarios'];
 
    if (tiposPermitidos.indexOf(tipo) < 0) {
       return res.status(400).json({
@@ -62,13 +64,18 @@ app.post("/upload/:tipo/:id", (req, res) => {
       if (err) {
 
          return res.status(500).json({
-            ok: true, 
+            ok: true,
             err
          })
       }
 
       // return res.json({ ok: true, message: "Archivo Guardado" })
-      imagenUsuario(id, res, nuevoNombreUnico)
+      if (tipo === 'usuarios') {
+         imagenUsuario(id, res, nuevoNombreUnico)
+      }
+      else {
+         imagenProducto(id, res, nuevoNombreUnico)
+      }
 
    })
 })
@@ -77,16 +84,18 @@ function imagenUsuario(id, res, nombreArchivo) {
 
    Usuario.findById(id, (err, usuarioDB) => {
       if (err) {
-         borrarArchivo(nombreArchivo,'usuarios')
+         borrarArchivo(nombreArchivo, 'usuarios')
          res.status(500).json({ ok: false, err })
       }
-      
+
       if (!usuarioDB) {
-         borrarArchivo(nombreArchivo,'usuarios')
+         borrarArchivo(nombreArchivo, 'usuarios')
          res.status(400).json({ ok: false, message: 'Usuario no existe' })
       }
 
-      borrarArchivo(usuarioDB.img,'usuarios')
+      console.log(usuarioDB.img)
+
+      borrarArchivo(usuarioDB.img, 'usuarios')
 
       usuarioDB.img = nombreArchivo
 
@@ -96,12 +105,37 @@ function imagenUsuario(id, res, nombreArchivo) {
    })
 }
 
-function borrarArchivo(nombreImagen,tipo){
-   // primero obtenemos la ruta de la imagen ya guardada
-   let pathImage = path.resolve(__dirname, `../../upload/${tipo}/${nombreImagen}`)
+function imagenProducto(id, res, nombreArchivo) {
+   Producto.findById(id, (err, productoDB) => {
+      if (err) {
+         borrarArchivo(nombreArchivo, 'productos')
+         res.status(500).json({ ok: false, err })
+      }
 
-   if (fs.existsSync(pathImage)){ //comprobamos si existe ese archivoa atravez de la ruta
-      fs.unlink(pathImage) //eliminamos el archivo
+      if (!productoDB) {
+         borrarArchivo(nombreArchivo, 'productos')
+         res.status(401).json({ ok: false, message: "El id del producto no existe" })
+      }
+
+      borrarArchivo(productoDB.img, 'productos')
+
+      productoDB.img = nombreArchivo
+
+      productoDB.save((err, productoGuardado) => {
+         res.json({ ok: true, producto: productoGuardado, img: productoGuardado.img })
+      })
+
+   })
+
+}
+
+function borrarArchivo(nombreImagen, tipo) {
+   // primero obtenemos la ruta de la imagen ya guardada
+   let pathImage = path.resolve(__dirname, `../../uploads/${tipo}/${nombreImagen}`)
+   console.log("entre ala funcion", pathImage);
+   if (fs.existsSync(pathImage)) { //comprobamos si existe ese archivoa atravez de la ruta
+      console.log("entre ala condicion de la funcion");
+      fs.unlinkSync(pathImage) //eliminamos el archivo
    }
 }
 
