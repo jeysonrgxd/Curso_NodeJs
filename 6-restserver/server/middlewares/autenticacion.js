@@ -35,7 +35,31 @@ let verificaAdmin_Role = (req,res,next)=>{
    next()
 }
 
+// protegemos nuestras imagenes mediante un token no solo imagenes tambien puede ser cualquier archivo
+
+let verificaTokenImg = (req,res,next) => {
+// obtenemos el token de la url
+   let token = req.query.token
+
+   jwt.verify(token, process.env.SEED, (err, decoded) => {
+      // en el decoded viene el payload del jwt entonses es el cuerpo o los atributos que le dimo al primer parametro del jwt.sign(...)
+      if (err) {
+         return res.status(401).json({
+            ok: false,
+            error: err
+         })
+      }
+
+      //si no hay error entonses viene, creamos una nueva propiedad para el request en el cual le pasamos los datos del
+      req.usuario = decoded.usuario
+      next()
+
+   })
+
+}
+
 module.exports = {
    verificaToken,
-   verificaAdmin_Role
+   verificaAdmin_Role,
+   verificaTokenImg
 }
