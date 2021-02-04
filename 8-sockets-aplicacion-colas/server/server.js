@@ -6,7 +6,7 @@ const path = require('path');
 
 const app = express();
 let server = http.createServer(app);
-path.re
+
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 
